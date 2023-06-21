@@ -3,8 +3,8 @@ import streamlit as st
 from langchain.llms import LlamaCpp
 from langchain import PromptTemplate, LLMChain
 from langchain.callbacks.manager import CallbackManager
-#from langchain.callbacks.streamlit import StreamlitCallbackHandler
-from callbacks.streamlit import StreamlitCallbackHandler
+from langchain.callbacks.streamlit import StreamlitCallbackHandler
+#from callbacks.streamlit import StreamlitCallbackHandler
 
 # Streamlit Setup
 st.title("Demo LLaMA")
@@ -20,7 +20,8 @@ template = """Question: {question}
 Answer: Let's work this out in a step by step way to be sure we have the right answer."""
 
 prompt = PromptTemplate(template=template, input_variables=["question"])
-callback_manager = CallbackManager([StreamlitCallbackHandler(output_container)])
+#callback_manager = CallbackManager([StreamlitCallbackHandler(output_container)])
+callback_manager = CallbackManager([StreamlitCallbackHandler()])
 llm = LlamaCpp(
     model_path=model_path, callback_manager=callback_manager, verbose=True
 )
@@ -35,5 +36,5 @@ with input_container:
 
 with output_container:
 	if user_input:
-		response = chain.run(question=user_input) 
-		output_container.write(response)
+		chain.run(question=user_input) 
+	#	st.write(response)
